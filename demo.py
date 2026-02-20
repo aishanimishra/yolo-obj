@@ -1,0 +1,32 @@
+import cv2
+from ultralytics import YOLO
+
+# Load a YOLO26n PyTorch model
+model = YOLO("yolov8n.pt")
+
+# Read image
+image_path = r"C:\Users\Aishani\OneDrive\Desktop\yolo-obj\0000000_01013_d_0000003.jpg"
+frame = cv2.imread(image_path)
+
+# Run YOLO
+results = model(frame)
+
+# Annotated image
+annotated_frame = results[0].plot()
+
+# Get inference time
+inference_time = results[0].speed['inference']
+fps = 1000 / inference_time if inference_time > 0 else 0
+text = f'FPS: {fps:.1f}'
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+text_size = cv2.getTextSize(text, font, 1, 2)[0]
+text_x = annotated_frame.shape[1] - text_size[0] - 10
+text_y = text_size[1] + 10
+
+cv2.putText(annotated_frame, text, (text_x, text_y),
+            font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+cv2.imshow("Image", annotated_frame)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
