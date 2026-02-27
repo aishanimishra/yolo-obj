@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 # Read image
-image_path = r"C:\Users\Aishani\OneDrive\Desktop\yolo-obj\0000000_01013_d_0000003.jpg"
+image_path = "image.jpg"
 frame = cv2.imread(image_path)
 
 # Run YOLO
@@ -29,4 +29,5 @@ cv2.putText(annotated_frame, text, (text_x, text_y),
 
 cv2.imshow("Image", annotated_frame)
 cv2.waitKey(0)
+
 cv2.destroyAllWindows()
